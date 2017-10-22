@@ -1,0 +1,391 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="QuanLyPhongTroModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ChitietPhong">
+          <Key>
+            <PropertyRef Name="MaPhong" />
+            <PropertyRef Name="IdNguoi" />
+          </Key>
+          <Property Name="MaPhong" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="IdNguoi" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TienCoc" Type="money" />
+          <Property Name="SoNguoi" Type="int" />
+          <Property Name="TinhTrang" Type="bit" />
+          <Property Name="ChuPhong" Type="bit" />
+        </EntityType>
+        <EntityType Name="LoaiPhong">
+          <Key>
+            <PropertyRef Name="MaLoai" />
+          </Key>
+          <Property Name="MaLoai" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TenLoai" Type="varchar" MaxLength="20" />
+          <Property Name="GiaPhong" Type="money" />
+        </EntityType>
+        <EntityType Name="NguoiTro">
+          <Key>
+            <PropertyRef Name="IdNguoi" />
+          </Key>
+          <Property Name="IdNguoi" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HoTen" Type="varchar" MaxLength="50" />
+          <Property Name="NamSinh" Type="date" />
+          <Property Name="Cmnd" Type="int" />
+          <Property Name="SoDT" Type="int" />
+          <Property Name="NgayVao" Type="date" />
+        </EntityType>
+        <EntityType Name="Phong">
+          <Key>
+            <PropertyRef Name="MaPhong" />
+          </Key>
+          <Property Name="Maloai" Type="int" />
+          <Property Name="MaPhong" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="Internet" Type="money" />
+          <Property Name="Rac" Type="money" />
+          <Property Name="Nuoc" Type="money" />
+          <Property Name="Dien" Type="money" />
+          <Property Name="ChiPhiKhac" Type="money" />
+        </EntityType>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="TienPhongThang">
+          <Key>
+            <PropertyRef Name="MaPhong" />
+          </Key>
+          <Property Name="MaPhong" Type="varchar" MaxLength="5" Nullable="false" />
+          <Property Name="SoDienCu" Type="int" />
+          <Property Name="SoDienMoi" Type="int" />
+          <Property Name="SoNuocCu" Type="int" />
+          <Property Name="SoNuocMoi" Type="int" />
+          <Property Name="TienPhong" Type="money" />
+        </EntityType>
+        <Association Name="FK__ChitietPh__IdNgu__182C9B23">
+          <End Role="NguoiTro" Type="Self.NguoiTro" Multiplicity="1" />
+          <End Role="ChitietPhong" Type="Self.ChitietPhong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NguoiTro">
+              <PropertyRef Name="IdNguoi" />
+            </Principal>
+            <Dependent Role="ChitietPhong">
+              <PropertyRef Name="IdNguoi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ChitietPh__MaPho__1920BF5C">
+          <End Role="Phong" Type="Self.Phong" Multiplicity="1" />
+          <End Role="ChitietPhong" Type="Self.ChitietPhong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phong">
+              <PropertyRef Name="MaPhong" />
+            </Principal>
+            <Dependent Role="ChitietPhong">
+              <PropertyRef Name="MaPhong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phong__Maloai__1A14E395">
+          <End Role="LoaiPhong" Type="Self.LoaiPhong" Multiplicity="0..1" />
+          <End Role="Phong" Type="Self.Phong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoaiPhong">
+              <PropertyRef Name="MaLoai" />
+            </Principal>
+            <Dependent Role="Phong">
+              <PropertyRef Name="Maloai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TienPhong__MaPho__1B0907CE">
+          <End Role="Phong" Type="Self.Phong" Multiplicity="1" />
+          <End Role="TienPhongThang" Type="Self.TienPhongThang" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Phong">
+              <PropertyRef Name="MaPhong" />
+            </Principal>
+            <Dependent Role="TienPhongThang">
+              <PropertyRef Name="MaPhong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuanLyPhongTroModelStoreContainer">
+          <EntitySet Name="ChitietPhong" EntityType="Self.ChitietPhong" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LoaiPhong" EntityType="Self.LoaiPhong" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="NguoiTro" EntityType="Self.NguoiTro" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Phong" EntityType="Self.Phong" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TienPhongThang" EntityType="Self.TienPhongThang" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__ChitietPh__IdNgu__182C9B23" Association="Self.FK__ChitietPh__IdNgu__182C9B23">
+            <End Role="NguoiTro" EntitySet="NguoiTro" />
+            <End Role="ChitietPhong" EntitySet="ChitietPhong" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ChitietPh__MaPho__1920BF5C" Association="Self.FK__ChitietPh__MaPho__1920BF5C">
+            <End Role="Phong" EntitySet="Phong" />
+            <End Role="ChitietPhong" EntitySet="ChitietPhong" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phong__Maloai__1A14E395" Association="Self.FK__Phong__Maloai__1A14E395">
+            <End Role="LoaiPhong" EntitySet="LoaiPhong" />
+            <End Role="Phong" EntitySet="Phong" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TienPhong__MaPho__1B0907CE" Association="Self.FK__TienPhong__MaPho__1B0907CE">
+            <End Role="Phong" EntitySet="Phong" />
+            <End Role="TienPhongThang" EntitySet="TienPhongThang" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="QuanLyPhongTroModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ChitietPhong">
+          <Key>
+            <PropertyRef Name="MaPhong" />
+            <PropertyRef Name="IdNguoi" />
+          </Key>
+          <Property Name="MaPhong" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IdNguoi" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TienCoc" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="SoNguoi" Type="Int32" />
+          <Property Name="TinhTrang" Type="Boolean" />
+          <Property Name="ChuPhong" Type="Boolean" />
+          <NavigationProperty Name="NguoiTro" Relationship="Self.FK__ChitietPh__IdNgu__182C9B23" FromRole="ChitietPhong" ToRole="NguoiTro" />
+          <NavigationProperty Name="Phong" Relationship="Self.FK__ChitietPh__MaPho__1920BF5C" FromRole="ChitietPhong" ToRole="Phong" />
+        </EntityType>
+        <EntityType Name="LoaiPhong">
+          <Key>
+            <PropertyRef Name="MaLoai" />
+          </Key>
+          <Property Name="MaLoai" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TenLoai" Type="String" MaxLength="20" FixedLength="false" Unicode="false" />
+          <Property Name="GiaPhong" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Phongs" Relationship="Self.FK__Phong__Maloai__1A14E395" FromRole="LoaiPhong" ToRole="Phong" />
+        </EntityType>
+        <EntityType Name="NguoiTro">
+          <Key>
+            <PropertyRef Name="IdNguoi" />
+          </Key>
+          <Property Name="IdNguoi" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HoTen" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="NamSinh" Type="DateTime" Precision="0" />
+          <Property Name="Cmnd" Type="Int32" />
+          <Property Name="SoDT" Type="Int32" />
+          <Property Name="NgayVao" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="ChitietPhongs" Relationship="Self.FK__ChitietPh__IdNgu__182C9B23" FromRole="NguoiTro" ToRole="ChitietPhong" />
+        </EntityType>
+        <EntityType Name="Phong">
+          <Key>
+            <PropertyRef Name="MaPhong" />
+          </Key>
+          <Property Name="Maloai" Type="Int32" />
+          <Property Name="MaPhong" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Internet" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Rac" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Nuoc" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="Dien" Type="Decimal" Precision="19" Scale="4" />
+          <Property Name="ChiPhiKhac" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="ChitietPhongs" Relationship="Self.FK__ChitietPh__MaPho__1920BF5C" FromRole="Phong" ToRole="ChitietPhong" />
+          <NavigationProperty Name="LoaiPhong" Relationship="Self.FK__Phong__Maloai__1A14E395" FromRole="Phong" ToRole="LoaiPhong" />
+          <NavigationProperty Name="TienPhongThang" Relationship="Self.FK__TienPhong__MaPho__1B0907CE" FromRole="Phong" ToRole="TienPhongThang" />
+        </EntityType>
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="TienPhongThang">
+          <Key>
+            <PropertyRef Name="MaPhong" />
+          </Key>
+          <Property Name="MaPhong" Type="String" MaxLength="5" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="SoDienCu" Type="Int32" />
+          <Property Name="SoDienMoi" Type="Int32" />
+          <Property Name="SoNuocCu" Type="Int32" />
+          <Property Name="SoNuocMoi" Type="Int32" />
+          <Property Name="TienPhong" Type="Decimal" Precision="19" Scale="4" />
+          <NavigationProperty Name="Phong" Relationship="Self.FK__TienPhong__MaPho__1B0907CE" FromRole="TienPhongThang" ToRole="Phong" />
+        </EntityType>
+        <Association Name="FK__ChitietPh__IdNgu__182C9B23">
+          <End Role="NguoiTro" Type="Self.NguoiTro" Multiplicity="1" />
+          <End Role="ChitietPhong" Type="Self.ChitietPhong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="NguoiTro">
+              <PropertyRef Name="IdNguoi" />
+            </Principal>
+            <Dependent Role="ChitietPhong">
+              <PropertyRef Name="IdNguoi" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ChitietPh__MaPho__1920BF5C">
+          <End Role="Phong" Type="Self.Phong" Multiplicity="1" />
+          <End Role="ChitietPhong" Type="Self.ChitietPhong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Phong">
+              <PropertyRef Name="MaPhong" />
+            </Principal>
+            <Dependent Role="ChitietPhong">
+              <PropertyRef Name="MaPhong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Phong__Maloai__1A14E395">
+          <End Role="LoaiPhong" Type="Self.LoaiPhong" Multiplicity="0..1" />
+          <End Role="Phong" Type="Self.Phong" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="LoaiPhong">
+              <PropertyRef Name="MaLoai" />
+            </Principal>
+            <Dependent Role="Phong">
+              <PropertyRef Name="Maloai" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__TienPhong__MaPho__1B0907CE">
+          <End Role="Phong" Type="Self.Phong" Multiplicity="1" />
+          <End Role="TienPhongThang" Type="Self.TienPhongThang" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Phong">
+              <PropertyRef Name="MaPhong" />
+            </Principal>
+            <Dependent Role="TienPhongThang">
+              <PropertyRef Name="MaPhong" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="QuanLyPhongTroEntities7" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ChitietPhongs" EntityType="Self.ChitietPhong" />
+          <EntitySet Name="LoaiPhongs" EntityType="Self.LoaiPhong" />
+          <EntitySet Name="NguoiTroes" EntityType="Self.NguoiTro" />
+          <EntitySet Name="Phongs" EntityType="Self.Phong" />
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="TienPhongThangs" EntityType="Self.TienPhongThang" />
+          <AssociationSet Name="FK__ChitietPh__IdNgu__182C9B23" Association="Self.FK__ChitietPh__IdNgu__182C9B23">
+            <End Role="NguoiTro" EntitySet="NguoiTroes" />
+            <End Role="ChitietPhong" EntitySet="ChitietPhongs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ChitietPh__MaPho__1920BF5C" Association="Self.FK__ChitietPh__MaPho__1920BF5C">
+            <End Role="Phong" EntitySet="Phongs" />
+            <End Role="ChitietPhong" EntitySet="ChitietPhongs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Phong__Maloai__1A14E395" Association="Self.FK__Phong__Maloai__1A14E395">
+            <End Role="LoaiPhong" EntitySet="LoaiPhongs" />
+            <End Role="Phong" EntitySet="Phongs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__TienPhong__MaPho__1B0907CE" Association="Self.FK__TienPhong__MaPho__1B0907CE">
+            <End Role="Phong" EntitySet="Phongs" />
+            <End Role="TienPhongThang" EntitySet="TienPhongThangs" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="QuanLyPhongTroModelStoreContainer" CdmEntityContainer="QuanLyPhongTroEntities7">
+          <EntitySetMapping Name="ChitietPhongs">
+            <EntityTypeMapping TypeName="QuanLyPhongTroModel.ChitietPhong">
+              <MappingFragment StoreEntitySet="ChitietPhong">
+                <ScalarProperty Name="MaPhong" ColumnName="MaPhong" />
+                <ScalarProperty Name="IdNguoi" ColumnName="IdNguoi" />
+                <ScalarProperty Name="TienCoc" ColumnName="TienCoc" />
+                <ScalarProperty Name="SoNguoi" ColumnName="SoNguoi" />
+                <ScalarProperty Name="TinhTrang" ColumnName="TinhTrang" />
+                <ScalarProperty Name="ChuPhong" ColumnName="ChuPhong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LoaiPhongs">
+            <EntityTypeMapping TypeName="QuanLyPhongTroModel.LoaiPhong">
+              <MappingFragment StoreEntitySet="LoaiPhong">
+                <ScalarProperty Name="MaLoai" ColumnName="MaLoai" />
+                <ScalarProperty Name="TenLoai" ColumnName="TenLoai" />
+                <ScalarProperty Name="GiaPhong" ColumnName="GiaPhong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="NguoiTroes">
+            <EntityTypeMapping TypeName="QuanLyPhongTroModel.NguoiTro">
+              <MappingFragment StoreEntitySet="NguoiTro">
+                <ScalarProperty Name="IdNguoi" ColumnName="IdNguoi" />
+                <ScalarProperty Name="HoTen" ColumnName="HoTen" />
+                <ScalarProperty Name="NamSinh" ColumnName="NamSinh" />
+                <ScalarProperty Name="Cmnd" ColumnName="Cmnd" />
+                <ScalarProperty Name="SoDT" ColumnName="SoDT" />
+                <ScalarProperty Name="NgayVao" ColumnName="NgayVao" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Phongs">
+            <EntityTypeMapping TypeName="QuanLyPhongTroModel.Phong">
+              <MappingFragment StoreEntitySet="Phong">
+                <ScalarProperty Name="Maloai" ColumnName="Maloai" />
+                <ScalarProperty Name="MaPhong" ColumnName="MaPhong" />
+                <ScalarProperty Name="Internet" ColumnName="Internet" />
+                <ScalarProperty Name="Rac" ColumnName="Rac" />
+                <ScalarProperty Name="Nuoc" ColumnName="Nuoc" />
+                <ScalarProperty Name="Dien" ColumnName="Dien" />
+                <ScalarProperty Name="ChiPhiKhac" ColumnName="ChiPhiKhac" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="QuanLyPhongTroModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TienPhongThangs">
+            <EntityTypeMapping TypeName="QuanLyPhongTroModel.TienPhongThang">
+              <MappingFragment StoreEntitySet="TienPhongThang">
+                <ScalarProperty Name="MaPhong" ColumnName="MaPhong" />
+                <ScalarProperty Name="SoDienCu" ColumnName="SoDienCu" />
+                <ScalarProperty Name="SoDienMoi" ColumnName="SoDienMoi" />
+                <ScalarProperty Name="SoNuocCu" ColumnName="SoNuocCu" />
+                <ScalarProperty Name="SoNuocMoi" ColumnName="SoNuocMoi" />
+                <ScalarProperty Name="TienPhong" ColumnName="TienPhong" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
