@@ -242,6 +242,8 @@ namespace Bin_BB
                       select LoaiPhong;
             cbb_LP.DataSource = cbb.ToList();
             cbb_LP.DisplayMember = "TenLoai";
+            MessageBox.Show("aaaaaaaaaaaaaaaaaa");
+            MessageBox.Show("bbbbbbbbbbbbbbbbbb");
         }
 
         private void cbb_LP_SelectedIndexChanged(object sender, EventArgs e)
@@ -283,5 +285,6 @@ namespace Bin_BB
             btn_Sua.Enabled = true;
             btn_Xoa.Enabled = true;
         }
+
     }
 }
